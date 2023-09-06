@@ -29,9 +29,11 @@ data class Formacao(val nome: String,val nivel: Nivel, val conteudos: List<Conte
     val duracao: Int = conteudos.sumOf{it.duracao}
     val inscritos: MutableList<Usuario> = mutableListOf()
     
-    fun matricular( usuario: Usuario) {
-        inscritos.add(usuario)
-        usuario.formacoes.add(this)
+    fun matricular(vararg usuario: Usuario) {
+        usuario.forEach{aluno ->
+        inscritos.add(aluno)
+        aluno.formacoes.add(this)
+        }
     }
     
     fun progresso(usuario: Usuario, cursosCompletos:Int) {
@@ -55,10 +57,9 @@ fun main() {
     val joao = Usuario("João",19)
     val gabriel = Usuario("gabriel",16)
     
-    formacaoWeb.matricular(fernanda)
-    formacaoWeb.progresso(fernanda,2)
+    formacaoWeb.matricular(fernanda,joao)
     
-    formacaoWeb.matricular(joao)
+    formacaoWeb.progresso(fernanda,2)
     formacaoWeb.progresso(joao,4)
     
     println(formacaoWeb)
